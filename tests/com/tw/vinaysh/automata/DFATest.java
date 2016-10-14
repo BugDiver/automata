@@ -1,10 +1,9 @@
 package com.tw.vinaysh.automata;
 
-import com.tw.vinaysh.automata.tuple.State;
-import com.tw.vinaysh.automata.tuple.TransitionFunction;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,13 +12,40 @@ import static org.junit.Assert.assertTrue;
 
 public class DFATest {
 
-    Set<String> alphabets = new HashSet<String>() {{
+    private Set<String> alphabets = new HashSet<String>() {{
         add("0");
         add("1");
     }};
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     @Test
-    public void testDFAAcceptsStringEndWithOne() {
+    public void testShouldThrowExceptionForInvalidAlphabets() throws Exception{
+        thrown.expect(InvalidAlphabetException.class);
+        thrown.expectMessage("provided alphabet ∑ is not valid!");
+
+        State q1 = new State("q1");
+
+        TransitionFunction tf = new TransitionFunction();
+
+        Transition transitionforq1 = new Transition();
+        transitionforq1.addTransition("0",q1);
+        transitionforq1.addTransition("1",q1);
+
+        tf.addTransition(q1,transitionforq1);
+
+        DFA dfa  = new DFA(new HashSet<State>(){{add(q1);}},
+                            q1,
+                            new HashSet<String>(){{add("0");add("1");}},
+                            tf ,
+                            new HashSet<State>(){{add(q1);}});
+
+        dfa.validates("∑");
+    }
+
+    @Test
+    public void testDFAAcceptsStringEndWithOne() throws InvalidAlphabetException {
         State q1state = new State("q1");
         State q2state = new State("q2");
         Set<State> setOfStates = new HashSet<State>() {{
@@ -29,28 +55,28 @@ public class DFATest {
 
         TransitionFunction transitionFunction = new TransitionFunction();
 
-        HashMap<String, State> transitionForQ1 = new HashMap<>();
-        transitionForQ1.put("0", q1state);
-        transitionForQ1.put("1", q2state);
+        Transition transitionForQ1 = new Transition();
+        transitionForQ1.addTransition("0", q1state);
+        transitionForQ1.addTransition("1", q2state);
 
-        HashMap<String, State> transitionForQ2 = new HashMap<>();
-        transitionForQ2.put("0", q1state);
-        transitionForQ2.put("1", q2state);
+        Transition transitionForQ2 = new Transition();
+        transitionForQ2.addTransition("0", q1state);
+        transitionForQ2.addTransition("1", q2state);
 
-        transitionFunction.addState(q1state, transitionForQ1);
-        transitionFunction.addState(q2state, transitionForQ2);
+        transitionFunction.addTransition(q1state, transitionForQ1);
+        transitionFunction.addTransition(q2state, transitionForQ2);
 
         Set<State> finalStates = new HashSet<State>() {{
             add(q2state);
         }};
 
         DFA dfa = new DFA(setOfStates, q1state, alphabets, transitionFunction, finalStates);
-        assertTrue(dfa.isAccepted("00011"));
-        assertFalse(dfa.isAccepted("0000"));
+        assertTrue(dfa.validates("00011"));
+        assertFalse(dfa.validates("0000"));
     }
 
     @Test
-    public void testDFAAcceptsStringBeginWith1AndContainTheString001() {
+    public void testDFAAcceptsStringBeginWith1AndContainTheString001() throws Exception {
         State q0 = new State("q0");
         State q1 = new State("q1");
         State q2 = new State("q2");
@@ -69,43 +95,43 @@ public class DFATest {
 
         TransitionFunction transitionFunction = new TransitionFunction();
 
-        HashMap<String, State> transitionForQ0 = new HashMap<>();
-        transitionForQ0.put("0", deadState);
-        transitionForQ0.put("1", q1);
+        Transition transitionForQ0 = new Transition();
+        transitionForQ0.addTransition("0", deadState);
+        transitionForQ0.addTransition("1", q1);
 
-        HashMap<String, State> transitionForQ1 = new HashMap<>();
-        transitionForQ1.put("0", q2);
-        transitionForQ1.put("1", q1);
+        Transition transitionForQ1 = new Transition();
+        transitionForQ1.addTransition("0", q2);
+        transitionForQ1.addTransition("1", q1);
 
-        HashMap<String, State> transitionForQ2 = new HashMap<>();
-        transitionForQ2.put("0", q3);
-        transitionForQ2.put("1", q1);
+        Transition transitionForQ2 = new Transition();
+        transitionForQ2.addTransition("0", q3);
+        transitionForQ2.addTransition("1", q1);
 
-        HashMap<String, State> transitionForQ3 = new HashMap<>();
-        transitionForQ3.put("0", q3);
-        transitionForQ3.put("1", q4);
+        Transition transitionForQ3 = new Transition();
+        transitionForQ3.addTransition("0", q3);
+        transitionForQ3.addTransition("1", q4);
 
-        HashMap<String, State> transitionForQ4 = new HashMap<>();
-        transitionForQ4.put("0", q4);
-        transitionForQ4.put("1", q4);
+        Transition transitionForQ4 = new Transition();
+        transitionForQ4.addTransition("0", q4);
+        transitionForQ4.addTransition("1", q4);
 
-        HashMap<String, State> transitionForDeadState = new HashMap<>();
-        transitionForQ4.put("0", deadState);
-        transitionForQ4.put("1", deadState);
+        Transition transitionForDeadState = new Transition();
+        transitionForQ4.addTransition("0", deadState);
+        transitionForQ4.addTransition("1", deadState);
 
-        transitionFunction.addState(q0, transitionForQ0);
-        transitionFunction.addState(q1, transitionForQ1);
-        transitionFunction.addState(q2, transitionForQ2);
-        transitionFunction.addState(q3, transitionForQ3);
-        transitionFunction.addState(q4, transitionForQ4);
-        transitionFunction.addState(deadState, transitionForDeadState);
+        transitionFunction.addTransition(q0, transitionForQ0);
+        transitionFunction.addTransition(q1, transitionForQ1);
+        transitionFunction.addTransition(q2, transitionForQ2);
+        transitionFunction.addTransition(q3, transitionForQ3);
+        transitionFunction.addTransition(q4, transitionForQ4);
+        transitionFunction.addTransition(deadState, transitionForDeadState);
 
         DFA dfa = new DFA(setOfStates, q1, alphabets, transitionFunction, new HashSet<State>() {{
             add(q4);
         }});
 
-        assertTrue("strings start with 1 and end with 001 should pass", dfa.isAccepted("1001"));
-        assertTrue("strings start with 1 and end with 0001 should pass", dfa.isAccepted("10001"));
-        assertFalse("strings start with 0 should fail", dfa.isAccepted("011"));
+        assertTrue("strings start with 1 and end with 001 should pass", dfa.validates("1001"));
+        assertTrue("strings start with 1 and end with 0001 should pass", dfa.validates("10001"));
+        assertFalse("strings start with 0 should fail", dfa.validates("011"));
     }
 }

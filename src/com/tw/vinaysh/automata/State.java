@@ -1,4 +1,4 @@
-package com.tw.vinaysh.automata.tuple;
+package com.tw.vinaysh.automata;
 
 public class State {
     private final String state          ;
