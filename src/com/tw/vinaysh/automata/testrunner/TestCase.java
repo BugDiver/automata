@@ -17,18 +17,18 @@ public class TestCase {
 
     public void runAllTestScenarios(){
         System.out.printf("\n\t%s\n",testName);
-        passCases.stream().filter(passCase -> !dfa.validates(passCase)).forEach(passCase -> System.out.printf("\t\t\"%s\" should be pass but failing.\n",passCase));
-        failCases.stream().filter(dfa::validates).forEach(failCase -> System.out.printf("\t\t\"%s\" should be fail but passing.\n",failCase));
+        passCases.stream().filter(passCase -> !dfa.validates(passCase)).forEach(passCase -> System.out.printf("\t\t\"%s\" should pass but failing.\n",passCase));
+        failCases.stream().filter(dfa::validates).forEach(failCase -> System.out.printf("\t\t\"%s\" should fail but passing.\n",failCase));
     }
 
     public void runPassingTestScenarios() {
         System.out.printf("\n\t%s\n",testName);
-        passCases.stream().filter(passCase -> !dfa.validates(passCase)).forEach(passCase -> System.out.printf("\t\t\"%s\" should be pass but failing.\n",passCase));
+        passCases.stream().filter(passCase -> !dfa.validates(passCase)).forEach(passCase -> System.out.printf("\t\t\"%s\" should pass but failing.\n",passCase));
     }
 
     public void runFailingTestScenarions(){
         System.out.printf("\n\t%s\n",testName);
-        failCases.stream().filter(dfa::validates).forEach(failCase -> System.out.printf("\t\t\"%s\" should be fail but passing.\n",failCase));
+        failCases.stream().filter(dfa::validates).forEach(failCase -> System.out.printf("\t\t\"%s\" should fail but passing.\n",failCase));
 
     }
 

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Parser {
 
-    public TestRunner parse(String text ,DFAGenerator generator) {
+    public TestRunner parse(String text ,IDFAGenerator generator) {
         TestRunner runner= new TestRunner();
         text = text.replaceAll("\\\\","");
         text = text.substring(1,text.length() -1);

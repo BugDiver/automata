@@ -98,8 +98,8 @@ public class TestRunnerTest {
         String expected  =  "Running all test scenarios:- \n" +
                             "\n"+
                             "\tstring start with 1 and ends with 0\n" +
-                            "\t\t\"01\" should be pass but failing.\n" +
-                            "\t\t\"1000\" should be fail but passing.\n";
+                            "\t\t\"01\" should pass but failing.\n" +
+                            "\t\t\"1000\" should fail but passing.\n";
         assertEquals(outContent.toString(),expected);
     }
 
