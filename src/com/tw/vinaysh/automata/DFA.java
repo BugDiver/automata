@@ -1,39 +1,38 @@
 package com.tw.vinaysh.automata;
 
+import com.tw.vinaysh.automata.testrunner.IDFA;
+import com.tw.vinaysh.automata.testrunner.State;
+import com.tw.vinaysh.automata.testrunner.TransitionFunction;
+
+import java.util.HashSet;
 import java.util.Set;
 
-class DFA {
-    private Set<State> setOfStates;
-    private Set<String> alphabets;
-    private TransitionFunction transitionFunction;
-    private State initialState;
-    private Set<State> finalState;
+public class DFA implements IDFA {
+    private final Set<State> setOfStates;
+    private final Set<String> alphabets;
+    private final TransitionFunction transitionFunction;
+    private final State initialState;
+    private final Set<State> finalStates;
 
-    DFA(Set<State> setOfStates, State initialState, Set<String> alphabets, TransitionFunction transitionFunction, Set<State> finalStates) {
-        this.initialState = initialState;
+    public DFA(Set<State> setOfStates, Set<String> alphabets, TransitionFunction transitionFunction, State initialState, Set<State> finalStates) {
         this.setOfStates = setOfStates;
-        this.alphabets =  alphabets;
+        this.alphabets = alphabets;
         this.transitionFunction = transitionFunction;
-        this.finalState = finalStates;
+        this.initialState = initialState;
+        this.finalStates = finalStates;
     }
 
     private State transitTo(State currentState,String input){
         return transitionFunction.getTransitionsFor(currentState).getNextStateFor(input);
     }
 
-    boolean validates(String s) throws InvalidAlphabetException {
+    @Override
+    public boolean validates(String input) {
         State currentState = initialState;
-        for (String input : s.split("")) {
-            validateAlphabet(input);
-            currentState = transitTo(currentState, input);
+        for (String alphabet : input.split("")) {
+            currentState = transitTo(currentState, alphabet);
         }
-        return finalState.contains(currentState);
-    }
-
-    private void validateAlphabet(String input) throws InvalidAlphabetException {
-        if (!alphabets.contains(input)){
-            throw new InvalidAlphabetException(input);
-        }
+        return finalStates.contains(currentState);
     }
 
 }

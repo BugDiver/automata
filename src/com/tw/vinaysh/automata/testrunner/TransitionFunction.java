@@ -1,22 +1,22 @@
-package com.tw.vinaysh.automata;
+package com.tw.vinaysh.automata.testrunner;
 
 import java.util.HashMap;
 
-class TransitionFunction {
+public class TransitionFunction {
 
     private final HashMap<State, Transition> transitionFunction;
 
-    TransitionFunction() {
+    public TransitionFunction() {
         this.transitionFunction = new HashMap<>();
     }
 
 
-    void addTransition(State state, Transition transition) {
+    public void addTransition(State state, Transition transition) {
         transitionFunction.put(state,transition);
     }
 
 
-    Transition getTransitionsFor(State state) {
+    public Transition getTransitionsFor(State state) {
         return transitionFunction.get(state);
     }
 }
