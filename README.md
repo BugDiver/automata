@@ -16,7 +16,7 @@ q1,0,q2
 ```
 ## How to use
 
-* Download the jar from [here](https://github.com/BugDiver/automata/blob/master/testrunner.jar).
+* Download the jar from [here](https://github.com/BugDiver/automata/blob/master/testRunner.jar).
 * Add the jar in your project as a dependency.
 * Create a DFA class which implements IDFA.
 ```
