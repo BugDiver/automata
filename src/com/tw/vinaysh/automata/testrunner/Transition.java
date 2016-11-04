@@ -1,22 +1,26 @@
 package com.tw.vinaysh.automata.testrunner;
 
-import com.tw.vinaysh.automata.testrunner.State;
-
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class Transition  {
 
-    private final HashMap<String, State> transitions;
+    private final HashMap<String, State[]> transitions;
 
     public Transition() {
         this.transitions = new HashMap<>();
     }
 
-    public void addTransition(String alphabet, State state) {
+    public void addTransition(String alphabet, State... state) {
             transitions.put(alphabet,state);
     }
 
-    public State getNextStateFor(String input) {
-        return transitions.get(input);
+    public List<State> getNextStateFor(String input) {
+        return Arrays.asList(transitions.get(input));
+    }
+
+    public boolean contains(String e) {
+        return transitions.containsKey(e);
     }
 }

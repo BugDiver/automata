@@ -19,4 +19,5 @@ public class TransitionFunction {
     public Transition getTransitionsFor(State state) {
         return transitionFunction.get(state);
     }
+
 }

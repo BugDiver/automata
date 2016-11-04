@@ -1,5 +1,5 @@
 package com.tw.vinaysh.automata.testrunner;
 
-public interface IDFA {
+public interface IFA {
     boolean validates(String input);
 }
