@@ -22,11 +22,9 @@ public class Main {
             put("dfa",new MyDFAGenerator());
         }};
 
-        for (TestCase testcase : cases) {
-            if (testcase.getTestType().equals("nfa")){
-                TestRunner runner = testcase.getTextRunner(generators.get(testcase.getTestType()));
-                runner.runAllTestCases();
-            }
-        }
+        cases.stream().filter(testcase -> !testcase.getTestType().equals("nfa-to-dfa")).forEach(testcase -> {
+            TestRunner runner = testcase.getTextRunner(generators.get(testcase.getTestType()));
+            runner.runAllTestCases();
+        });
     }
 }

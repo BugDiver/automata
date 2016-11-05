@@ -6,18 +6,18 @@ import java.util.List;
 
 public class Transition  {
 
-    private final HashMap<String, State[]> transitions;
+    private final HashMap<String, States> transitions;
 
     public Transition() {
         this.transitions = new HashMap<>();
     }
 
-    public void addTransition(String alphabet, State... state) {
+    public void addTransition(String alphabet, States state) {
             transitions.put(alphabet,state);
     }
 
-    public List<State> getNextStateFor(String input) {
-        return Arrays.asList(transitions.get(input));
+    public States getNextStateFor(String input) {
+        return transitions.get(input);
     }
 
     public boolean contains(String e) {

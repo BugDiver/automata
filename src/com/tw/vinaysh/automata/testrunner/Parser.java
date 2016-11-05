@@ -28,11 +28,11 @@ public class Parser {
     }
 
     private Tuple createTuple(JSONObject tuple,String type) {
-        HashSet<State> states = createStates(tuple.getJSONArray("states"));
+        States states = createStates(tuple.getJSONArray("states"));
         HashSet<String> alphabets = createAlphabetSets(tuple.getJSONArray("alphabets"));
         TransitionFunction tf = createTransitionFunction(tuple.getJSONObject("delta"),type);
         State startState = new State(tuple.getString("start-state"));
-        HashSet<State> finalStates = createStates(tuple.getJSONArray("final-states"));
+        States finalStates = createStates(tuple.getJSONArray("final-states"));
         return new Tuple(states,alphabets,tf,startState,finalStates);
     }
 
@@ -43,9 +43,9 @@ public class Parser {
             Transition transition = new Transition();
             for (String alphabet : transitions.getJSONObject(s).keySet()) {
                 if (type.equals("dfa")){
-                    transition.addTransition(alphabet,new State(transitions.getJSONObject(s).getString(alphabet)));
+                    transition.addTransition(alphabet,new States(new State(transitions.getJSONObject(s).getString(alphabet))));
                 }else{
-                    transition.addTransition(alphabet,asStateArray(transitions.getJSONObject(s).getJSONArray(alphabet)));
+                    transition.addTransition(alphabet,asStates(transitions.getJSONObject(s).getJSONArray(alphabet)));
                 }
             }
             tf.addTransition(state, transition);
@@ -53,10 +53,10 @@ public class Parser {
         return tf;
     }
 
-    private State[] asStateArray(JSONArray jsonArray) {
-        State[] states = new State[jsonArray.length()];
+    private States asStates(JSONArray jsonArray) {
+        States states = new States();
         for (int i = 0; i < jsonArray.length(); i++) {
-            states[i] = new State(jsonArray.getString(i));
+            states.add(new State(jsonArray.getString(i)));
         }
         return states;
     }
@@ -69,8 +69,8 @@ public class Parser {
         return alphabets;
     }
 
-    private  HashSet<State> createStates(JSONArray statesArray) {
-        HashSet<State> states = new HashSet<>();
+    private  States createStates(JSONArray statesArray) {
+        States states = new States();
         for (Object state : statesArray) {
             states.add(new State((String) state));
         }

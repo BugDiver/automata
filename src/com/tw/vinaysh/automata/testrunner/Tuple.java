@@ -3,13 +3,13 @@ package com.tw.vinaysh.automata.testrunner;
 import java.util.HashSet;
 
 public class Tuple {
-    private final HashSet<State> states;
+    private final States states;
     private final HashSet<String> alphabets;
     private final TransitionFunction tf;
     private final State startState;
-    private final HashSet<State> finalStates;
+    private final States finalStates;
 
-    public Tuple(HashSet<State> states, HashSet<String> alphabets, TransitionFunction tf, State startState, HashSet<State> finalStates) {
+    public Tuple(States states, HashSet<String> alphabets, TransitionFunction tf, State startState, States finalStates) {
         this.states = states;
         this.alphabets = alphabets;
         this.tf = tf;
@@ -21,7 +21,7 @@ public class Tuple {
         return startState;
     }
 
-    public HashSet<State> getFinalStates() {
+    public States getFinalStates() {
         return finalStates;
     }
 

@@ -2,9 +2,8 @@ package com.tw.vinaysh.automata;
 
 import com.tw.vinaysh.automata.testrunner.IFA;
 import com.tw.vinaysh.automata.testrunner.State;
+import com.tw.vinaysh.automata.testrunner.States;
 import com.tw.vinaysh.automata.testrunner.Tuple;
-
-import java.util.List;
 
 public class DFA implements IFA {
     private final Tuple tuple;
@@ -13,7 +12,7 @@ public class DFA implements IFA {
         this.tuple = tuple;
     }
 
-    private List<State> transitTo(State currentState, String input){
+    private States transitTo(State currentState, String input){
         return tuple.getTransitionsFor(currentState).getNextStateFor(input);
     }
 

@@ -9,10 +9,6 @@ public class TestCase {
     private List<String> passCases;
     private final List<String> failCases;
 
-    public String getTestName() {
-        return testName;
-    }
-
     public TestCase(String testName, String type, Tuple tuple, List<String> passCases, List<String> failCases) {
         this.testName = testName;
         this.type = type;
