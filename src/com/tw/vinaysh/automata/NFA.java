@@ -1,6 +1,9 @@
 package com.tw.vinaysh.automata;
 
-import com.tw.vinaysh.automata.testrunner.*;
+import com.tw.vinaysh.automata.testrunner.IFA;
+import com.tw.vinaysh.automata.testrunner.States;
+import com.tw.vinaysh.automata.testrunner.Transition;
+import com.tw.vinaysh.automata.testrunner.Tuple;
 
 class NFA implements IFA {
     private Tuple tuple;
@@ -15,31 +18,29 @@ class NFA implements IFA {
         States currentStates = epsilonTraverse(new States(tuple.getInitialState()));
         if (input.isEmpty()) return !currentStates.intersection(tuple.getFinalStates()).isEmpty();
         for (String s : input.split("")) {
-            currentStates = epsilonTraverse(epsilonStatesFor(s,currentStates));
+            currentStates = epsilonTraverse(getAllStates(currentStates,s));
         }
         return !currentStates.intersection(tuple.getFinalStates()).isEmpty();
     }
 
-    private States epsilonStatesFor(String s,States curr){
-        States newStates = new States();
-        for (State state : curr.asList()) {
-            Transition t = tuple.getTransitionsFor(state);
-            if (t != null && t.contains(s)){
-                newStates.addAll(t.getNextStateFor(s));
-            }
-        }
-        return newStates;
-    }
 
     private States epsilonTraverse(States states) {
-        States epsilonStates = new States();
-        for (State state : states.asList()) {
-            Transition t = tuple.getTransitionsFor(state);
-            if (t != null && t.contains("e")){
-                epsilonStates.addAll(t.getNextStateFor("e"));
-            }
-        }
+        String epsilon = "e";
+        States epsilonStates = getAllStates(states, epsilon);
         if (epsilonStates.difference(states).isEmpty()) return states;
         return epsilonTraverse(epsilonStates.union(states));
+    }
+
+    private States getAllStates(States states,String alphabet) {
+        States allStates = new States();
+        states.asList().forEach(state -> {
+            Transition transition = tuple.getTransitionsFor(state);
+            if (hasTransition(transition, alphabet)) allStates.addAll(transition.getNextStateFor(alphabet));
+        });
+        return allStates;
+    }
+
+    private boolean hasTransition(Transition t, String e) {
+        return t != null && t.contains(e);
     }
 }

@@ -6,7 +6,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 
 public class Parser {
 
@@ -55,33 +54,25 @@ public class Parser {
 
     private States asStates(JSONArray jsonArray) {
         States states = new States();
-        for (int i = 0; i < jsonArray.length(); i++) {
-            states.add(new State(jsonArray.getString(i)));
-        }
+        jsonArray.forEach(s -> states.add(new State((String) s)));
         return states;
     }
 
     private  HashSet<String> createAlphabetSets(JSONArray alphabetsArray) {
         HashSet<String> alphabets = new HashSet<>();
-        for (Object alphabet : alphabetsArray) {
-            alphabets.add((String)alphabet);
-        }
+        alphabetsArray.forEach(alphabet -> alphabets.add((String) alphabet));
         return alphabets;
     }
 
     private  States createStates(JSONArray statesArray) {
         States states = new States();
-        for (Object state : statesArray) {
-            states.add(new State((String) state));
-        }
+        statesArray.forEach(state -> states.add(new State((String) state)));
         return states;
     }
 
     private List<String> asStringList(JSONArray arr){
         List<String> list = new ArrayList<>();
-        for (Object o : arr) {
-            list.add((String)o);
-        }
+        arr.forEach(o -> list.add((String)o));
         return list;
     }
 }

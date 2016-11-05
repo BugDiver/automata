@@ -23,7 +23,7 @@ public class States{
         return new ArrayList<>(set).get(index);
     }
 
-    void add(State state) {
+    public void add(State state) {
         set.add(state);
     }
 
@@ -59,7 +59,6 @@ public class States{
     public States union(States states) {
         States union = new States(states);
         this.set.stream().filter(state -> !union.contains(state)).forEach(union::add);
-
         return union;
     }
 
