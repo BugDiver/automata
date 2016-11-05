@@ -62,4 +62,20 @@ public class States{
 
         return union;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof States)) return false;
+
+        States states = (States) o;
+
+        return set != null ? set.equals(states.set) : states.set == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return set != null ? set.hashCode() : 0;
+    }
 }
