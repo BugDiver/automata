@@ -37,22 +37,4 @@ public class TestRunner{
         System.out.println(out.toString());
     }
 
-    public void runOnlyPassingScenarios(){
-//        StringBuilder out = new StringBuilder(testName).append("(").append("type ->").append(type).append(") :-");
-//        out.append("\n\tpass cases:-\t\t");
-        for (String passCase : passCases) {
-            if (!machine.validates(passCase))
-                throw new RuntimeException(type+"---"+testName+"------"+passCase);
-            else
-                System.out.println(passCase);
-//                out.append("\n\t\t").append(passCase).append(":- pass");
-//            else
-//                out.append("\n\t\t").append(passCase).append(":- fail");
-        }
-//        System.out.println(out.toString());
-    }
-
-    public void runOnlyFailingScenarios(){
-        System.out.println("Running only failing scenarios:- ");
-    }
 }
